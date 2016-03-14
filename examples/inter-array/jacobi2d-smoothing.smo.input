@@ -1,0 +1,82 @@
+# #define isbound(i,j) (i==0)||(i==N)
+#                    ||(j==0)||(j==N)
+# for(int i=0; i<N; ++i)
+#   for(int j=0; j<N: ++j)
+# /*S0*/ A0[i][j]=(!isbound(i,j))? a[i][j]
+#          +(a[i-1][j]+a[i+1][j]+a[i][j-1]+a[i][j+1])
+#                   : a[i][j];
+# for(int i=0; i<N; ++i)
+#   for(int j=0; j<N: ++j)
+# /*S1*/ A1[i][j]=(!isbound(i,j))? A0[i][j]
+#          +(A0[i-1][j]+A0[i+1][j]+A0[i][j-1]+A0[i][j+1])
+#                   : A0[i][j];
+# for(int i=0; i<N; ++i)
+#   for(int j=0; j<N: ++j)
+# /*S2*/ A2[i][j]=(!isbound(i,j))? A1[i][j]
+#          +(A1[i-1][j]+A1[i+1][j]+A1[i][j-1]+A1[i][j+1])
+#                   : A1[i][j];
+# for(int i=0; i<N; ++i)
+#   for(int j=0; j<N: ++j)
+# /*S3*/ A3[i][j]=(!isbound(i,j))? A2[i][j]
+#          +(A2[i-1][j]+A2[i+1][j]+A2[i][j-1]+A2[i][j+1])
+#                   : A2[i][j];
+# for(int i=0; i<N; ++i)
+#   for(int j=0; j<N: ++j)
+# /*S4*/ A4[i][j]=(!isbound(i,j))? A3[i][j]
+#          +(A3[i-1][j]+A3[i+1][j]+A3[i][j-1]+A3[i][j+1])
+#                   : A3[i][j];
+
+# isl basic set defining the array space
+[N0] -> { [x0, x1, x2] : x0 >= 0 and x0 <= 4 and x1 >= 0 and x1 <= N0 - 1 and x2 >= 0 and x2 <= N0 - 1 }
+[N0] -> { [y0, y1, y2] : y0 >= 0 and y0 <= 4 and y1 >= 0 and y1 <= N0 - 1 and y2 >= 0 and y2 <= N0 - 1 }
+
+# isl names for the output variables
+y0 y1 y2
+
+# Number of statements
+5
+
+#########################################################
+# Number of conflict polshedra
+18
+
+0 0
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 0 and y0 = 0 and x1 < y1}
+0 0
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 0 and y0 = 0 and x1 = y1 and x2 < y2}
+0 1
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 0 and y0 = 1 and x1 >= y1}
+0 1
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 0 and y0 = 1 and x1 + 1 = y1 and x2 > y2}
+
+1 1
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 1 and y0 = 1 and x1 < y1}
+1 1
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 1 and y0 = 1 and x1 = y1 and x2 < y2}
+1 2
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 1 and y0 = 2 and x1 >= y1}
+1 2
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 1 and y0 = 2 and x1 + 1 = y1 and x2 > y2}
+
+2 2
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 2 and y0 = 2 and x1 < y1}
+2 2
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 2 and y0 = 2 and x1 = y1 and x2 < y2}
+2 3
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 2 and y0 = 3 and x1 >= y1}
+2 3
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 2 and y0 = 3 and x1 + 1 = y1 and x2 > y2}
+
+3 3
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 3 and y0 = 3 and x1 < y1}
+3 3
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 3 and y0 = 3 and x1 = y1 and x2 < y2}
+3 4
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 3 and y0 = 4 and x1 >= y1}
+3 4
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 3 and y0 = 4 and x1 + 1 = y1 and x2 > y2}
+
+4 4
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 4 and y0 = 4 and x1 < y1}
+4 4
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = 4 and y0 = 4 and x1 = y1 and x2 < y2}

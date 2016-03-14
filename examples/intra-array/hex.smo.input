@@ -1,0 +1,29 @@
+# isl basic set defining the array space
+[N0] -> { [x0, x1] : x1 - x0 >= - N0 + 1 and x0 + x1 >= N0 - 1 and x1 - x0 <= 2N0 - 2 and x0 + x1 <= 4N0 - 4 and x0 <= 2N0 - 2 and x0 >= 0}
+[N0] -> { [y0, y1] : y1 - y0 >= - N0 + 1 and y0 + y1 >= N0 - 1 and y1 - y0 <= 2N0 - 2 and y0 + y1 <= 4N0 - 4 and y0 <= 2N0 - 2 and y0 >= 0 }
+
+# isl names for the output variables
+y0 y1
+
+# Number of statements
+1
+
+#########################################################
+# Number of conflict polyhedra
+4
+
+# specification of the conflict set by listing the constituent conflict polyhedra 
+0 0
+[N0] -> { [x0, x1] -> [y0, y1] : x0 = y0 and x1 >= y1 + 1}
+
+0 0
+[N0] -> { [x0, x1] -> [y0, y1] : x0 = y0 + 1 and x1 <= y1}
+
+0 0
+[N0] -> { [x0, x1] -> [y0, y1] : x0 >= y0 + 2 and y0 >= N0 -1 and y1 + y0 <= 4N0 - 4 and y1 + y0 >= 4N0 - 5}
+
+0 0
+[N0] -> { [x0, x1] -> [y0, y1] : x1 >= y1 + 1 and x0 >= y0 + 1 and y0 >= N0 -1 and x0 >= y0 + 1 and y1 - y0 >= - N0 + 1 and y1 - y0 <= - N0 + 2}
+
+
+

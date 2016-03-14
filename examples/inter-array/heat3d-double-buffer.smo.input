@@ -1,0 +1,70 @@
+# for(int t=0; t<T; ++t)
+#    for(int i=0; i<N; ++i)
+#      for(int j=0; j<N; ++j)
+#        for(int k=0; j<N; ++k)
+#           M[0][t][i][j]= M[t-1][1][i-1][j][k]+M[t-1][1][i][j][k]+M[t-1][1][i+1][j][k]
+#                          + M[t-1][1][i][j-1][k]+M[t-1][1][i][j][k]+M[t-1][1][i][j+1][k]
+#                          + M[t-1][1][i+1][j-1][k]+M[t-1][1+1][i][j][k]+M[t-1][1][i+1][j+1][k]
+#
+#                          + M[t-1][1][i-1][j][k-1]+M[t-1][1][i][j][k-1]+M[t-1][1][i+1][j][k-1]
+#                          + M[t-1][1][i][j-1][k-1]+M[t-1][1][i][j][k-1]+M[t-1][1][i][j+1][k-1]
+#                          + M[t-1][1][i+1][j-1][k-1]+M[t-1][1+1][i][j][k-1]+M[t-1][1][i+1][j+1][k-1]
+#
+#                          + M[t-1][1][i-1][j][k+1]+M[t-1][1][i][j][k+1]+M[t-1][1][i+1][j][k+1]
+#                          + M[t-1][1][i][j-1][k+1]+M[t-1][1][i][j][k+1]+M[t-1][1][i][j+1][k+1]
+#                          + M[t-1][1][i+1][j-1][k+1]+M[t-1][1+1][i][j][k+1]+M[t-1][1][i+1][j+1][k+1]; // S1
+#    for(int i=0; i<N; ++i)      
+#      for(int j=0; j<N; ++j)
+#        M[1][t][i][j]=M[0][t][i][j];               // S2
+
+
+
+# isl basic set defining the array space
+[N0] -> { [x0, x1, x2, x3, x4] : x0 >= 0 and x0 <= 1 and x1 >= 0 and x1 <= N0 - 1 and x2 >= 0 and x2 <= N0 - 1 and x3 >= 0 and x3 <= N0-1 and x4 >= 0 and x4 <= N0-1}
+[N0] -> { [y0, y1, y2, y3, y4] : y0 >= 0 and y0 <= 1 and y1 >= 0 and y1 <= N0 - 1 and y2 >= 0 and y2 <= N0 - 1 and y3 >= 0 and y3 <= N0-1 and y4 >= 0 and y4 <= N0-1}
+
+# isl names for the output variables
+y0 y1 y2 y3 y4
+
+# Number of statements
+2
+
+#########################################################
+# Number of conflict polyhedra
+12
+
+# specification of the conflict set by listing the constituent conflict polyhedra 
+# intra-statement conflicts (within the same time stamp)
+0 0
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 0 and y0 = 0 and x1 = y1 and x2 = y2 and x3 = y3 and x4 < y4}
+0 0
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 0 and y0 = 0 and x1 = y1 and x2 = y2 and x3 < y3}
+0 0
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 0 and y0 = 0 and x1 = y1 and x2 < y2}
+
+
+# inter-statement conflicts (within the same time stamp) due to S1 computing a value
+0 1
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 0 and y0 = 1 and x1 = y1 and x2 > y2}
+0 1
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 0 and y0 = 1 and  x1 = y1 and x2 = y2 and x3 > y3}
+0 1
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 0 and y0 = 1 and  x1 = y1 and x2 = y2 and x3 = y3 and x4 > y4}
+
+# intra-statement conflicts (within the same time stamp) due to S1 computing a value
+1 1
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 1 and y0 = 1 and x1 = y1 and x2 = y2 and x3 = y3 and x4 < y4}
+1 1
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 1 and y0 = 1 and x1 = y1 and x2 = y2 and x3 < y3}
+1 1
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 1 and y0 = 1 and x1 = y1 and x2 < y2}
+
+# inter-statement conflicts (across time stamps) due to S0 computing a value
+1 0
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 1 and y0 = 0 and  x1 + 1 = y1 and x2 >= y2}
+1 0
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 1 and y0 = 0 and  x1 + 1 = y1 and x2 + 1 = y2 and x3 >= y3}
+1 0
+[N0] -> { [x0, x1, x2, x3, x4] -> [y0, y1, y2, y3, y4] : x0 = 1 and y0 = 0 and  x1 + 1 = y1 and x2 + 1 = y2 and x3 + 1 = y3 and x4 + 1 >= y4}
+
+

@@ -1,0 +1,38 @@
+# isl basic set defining the array space
+[N0] -> { [x0, x1, x2] : x0 >= 0 and x0 <= N0 - 1 and x1 >= 0 and x1 <= N0 - 1 and x2 >= 0 and x2 <= 1}
+[N0] -> { [y0, y1, y2] : y0 >= 0 and y0 <= N0 - 1 and y1 >= 0 and y1 <= N0 - 1 and y2 >= 0 and y2 <= 1}
+
+# isl names for the output variables
+y0 y1 y2
+
+# Number of statements
+2
+
+#########################################################
+# Number of conflict polyhedra
+7
+
+# specification of the conflict set by listing the constituent conflict polyhedra 
+0 0
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x1 = y1 and x0 > y0 and x2 = 0 and y2 = 0}
+
+0 0
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x1 > y1 and y0 <= N0 - 1 and y0 >= N0 - 2 and x2 = 0 and y2 = 0}
+
+# conflict with the same column of blurx
+0 1
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x1 = y1 and x0 >= y0 - 1 and x2 = 0 and y2 = 1}
+
+# conflict with the live out values of blurx which have been computed
+0 1
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x1 <= y1 and x0 <= N0 - 1 and x0 >= N0 - 2 and x2 = 0 and y2 = 1}
+
+1 1
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 > y0 and x2 = 1 and y2 = 1}
+
+1 1
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x0 = y0 and x1 > y1 and x2 = 1 and y2 = 1}
+
+# when a value of array space 0 is computed, it conflicts with all the values in 1 computed so far
+1 0
+[N0] -> { [x0, x1, x2] -> [y0, y1, y2] : x1 < y1 and x2 = 1 and y2 = 0}

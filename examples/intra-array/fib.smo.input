@@ -1,0 +1,19 @@
+# isl basic set defining the array space
+[N0] -> { [x0] : x0 >= 0 and x0 <= N0 - 1}
+[N0] -> { [y0] : y0 >= 0 and y0 <= N0 - 1}
+
+# isl names for the output variables
+y0
+
+# Number of statements
+1
+
+#########################################################
+# Number of conflict polyhedra
+1
+
+# specification of the conflict set by listing the constituent conflict polyhedra 
+# an intra-statement conflict
+0 0
+[N0] -> { [x0] -> [y0] : x0 - y0 = 1}
+
