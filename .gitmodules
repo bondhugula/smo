@@ -1,0 +1,6 @@
+[submodule "pet"]
+	path = pet
+	url = https://repo.or.cz/pet.git
+[submodule "isl"]
+	path = isl
+	url = https://repo.or.cz/isl.git
