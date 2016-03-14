@@ -2,8 +2,11 @@
 # SMO README
 #
 # Somashekaracharya G B
-# violinholmes@gmail.com
 # gbs@csa.iisc.ernet.in
+# violinholmes@gmail.com
+# 
+# Uday Bondhugula
+# uday@csa.iisc.ernet.in
 #
 
 SMO is a storage/memory optimizer for affine loop nests based on the 
@@ -13,7 +16,7 @@ expressions are affine function of loop iterators and program parameters
 
 LICENSE
 
-SMO is available under the MIT license.
+SMO is available under the MIT license. Please see file LICENSE for details.
 
 INSTALLING SMO
 
@@ -32,6 +35,17 @@ SMO includes all libraries that it depends on.  autoconf/automake
 system will take care of automatically building everything. Nothing else 
 needs to be downloaded and installed separately.  
 
+To use the Python wrapper for SMO, make sure that the following are 
+installed.
+
+python-dev (sudo apt-get install python-dev)
+islpy
+python-glpk (sudo apt-get install python-glpk)
+
+The examples folder contains conflict set specifications for various
+examples. Each of these files can be provided as an input to the prototype
+through the command line options
+
 
 BUILDING SMO
 
@@ -48,11 +62,11 @@ build with another isl, otherwise the bundled isl is used.
 
 Development version from Git
 
-$ git clone git://repo.or.cz/smo.git
+$ git clone git://github.com/bondhugula/smo.git
 $ cd smo/
 $ git submodule init 
 $ git submodule update
-$ ./bootstrap.sh
+$ ./autogen.sh
 $ ./configure [--enable-debug] [--with-isl-prefix=<isl install location>]
 $ make
 $ make test
@@ -61,123 +75,7 @@ $ make test
 isl. By default, the version of isl bundled with Pluto will be used.
 
 
-TRYING A NEW CODE
-
-- Use '#pragma scop' and '#pragma endscop' around the section of code 
-  you want to parallelize/optimize.
-
-- Then, just run 
-    
-    ./polycc <C source file> --parallel --tile
-
-  The transformation is also printed out, and test.par.c will have the 
-  parallelized code. If you want to see intermediate files, like the 
-  .cloog file generated (.opt.cloog, .tiled.cloog, or .par.cloog 
-  depending on command-line options provided), use --debug on command 
-  line.
-
-- Tile sizes can be specified in a file 'tile.sizes', otherwise default 
-  sizes will be set. See doc/DOC.txt on how to specify the sizes.
-
-To run a good number of experiments on a code, it is best to use the 
-setup created for example codes in the examples/ directory
-
-- Just copy one of the sample directories, edit Makefile (SRC = ), 
-  util.h, decls.h appropriately (put your problem size declarations in 
-  decls.h)
-
-- Now, do a make (this will build all executables; 'orig' is the 
-  original code, 'tiled' is the tiled code, 'par' is the OpenMP 
-  parallelized+locality optimized code; 'par2d' is with two degrees of 
-  parallelism whenever it exists). One could do 'make <target>', where
-  target can be orig, orig_par, opt, tiled, tiled_par
-
-- 'make test' to test for correctness
-
-
-COMMAND-LINE OPTIONS
-
-Run
-
-./polycc -h 
-
-or see documentation (doc/DOC.txt) for details
-
-
-TRYING ANY INCLUDED EXAMPLE CODE
-
-Let us say we are trying the 2-d Gauss Seidel. Do a 'make par', this 
-will generate seidel.par.c from seidel.c and also compile it to generate 
-'par'. Likewise, 'make tiled' for 'tiled' and 'make orig' for the 
-'orig'.
-
-$ cd examples/seidel
-
-seidel.orig.c: This is the original code (the kernel in this code is 
-extracted)
-
-seidel.opt.c: This is the transformed code without tiling (this is not 
-of much use, except for seeing the benefits of fusion in some cases)
-
-seidel.tiled.c: This the pluto tiled code (not parallelized) generated 
-from the tool - this should be used for single core execution
-
-seidel.par.c: This is the pluto parallelized + locality tiled code. This 
-has OpenMP pragmas and the code is L1 tiled or L1 and L2 tiled.
-
-seidel.par2d.c: In this case, since we have two degrees of pipelined 
-parallelism, so the .par2d.c is the code with nested parallel OpenMP 
-pragmas.
-
-- To change any of the flags used for an example, edit the top section 
-  of examples/common.mk or the Makefile in the example directory
-
-- To manually specify tile sizes, create tile.sizes; see 
-   examples/matmul/ for example or doc/DOC.txt for more information.  
-
-- orig (orig_par is the icc auto-parallelized original code), tiled, par 
-  and par2d are corresponding executables; they already have timers; you 
-  just have to run them and that will print execution time as well
-
-So, to run pluto parallelized version:
-
-$ export OMP_NUM_THREADS=4; ./par
-
-To run ICC auto-parallelized version:
-
-$ export OMP_NUM_THREADS=4; ./orig_par
-
-To run the original unparallelized code (compiled with icc -fast)
-
-$ ./orig
-
-To run the pluto tiled version (non-parallelized, local tiled)
-
-$ ./tiled
-
-- 'make clean' in the particular example's directory removes all the 
-    executables as well as the generated codes
-
-To launch a complete verification that compares output of tiled, par
-with orig for all examples, in the examples/ directory, run
-
-[examples/ ]$ make test
-
-
-
-MORE INFO
-
-* See doc/DOC.txt for an overview of the system and details on all 
-command-line options.
-
-* For specifying custom tile sizes through 'tile.sizes' file, see 
-doc/DOC.txt
-
-* For specifying custom fusion structure through '.fst' file, see 
-doc/DOC.txt
-
-
 CONTACT
 
-Please send all bugs reports and comments to 
-Uday <udayreddy@gmail.com>
+Please send all bugs reports and comments to S. Bhaskaracharya 
+<gbs@csa.iisc.ernet.in>
