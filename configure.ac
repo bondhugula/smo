@@ -3,15 +3,9 @@ dnl configure.in
 dnl 
 dnl SMO - Storage Optimizer (experimental)
 dnl 
-dnl Copyright (C) 2014-2015 Somashekaracharya G B
+dnl Copyright (C) 2014-2016 Somashekaracharya G B
 dnl
-dnl This program is free software; you can redistribute it and/or
-dnl modify it under the terms of the GNU General Public License
-dnl as published by the Free Software Foundation; either version 2
-dnl of the License, or (at your option) any later version.
-dnl
-dnl The complete GNU General Public Licence Notice can be found as the
-dnl `COPYING' file in the top-level directory.
+dnl See file LICENSE
 dnl
 
 AC_PREREQ(2.13)
@@ -177,11 +171,10 @@ AC_PATH_PROGS(BASH, bash)
 
 AC_CONFIG_FILES([getversion.sh], [chmod +x ./getversion.sh])
 AC_CONFIG_COMMANDS([version.h],
-                   [echo '#define PLUTO_VERSION "'`./getversion.sh`'"' > src/version.h])
+                   [echo '#define SMO_VERSION "'`./getversion.sh`'"' > src/version.h])
 
 AC_OUTPUT(Makefile \
           src/Makefile \
-          polycc.sh
           )
 
 echo " /*-----------------------------------------------*"
