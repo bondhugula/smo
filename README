@@ -38,13 +38,13 @@ needs to be downloaded and installed separately.
 To use the Python wrapper for SMO, make sure that the following are 
 installed.
 
-python-dev (sudo apt-get install python-dev)
-islpy
-python-glpk (sudo apt-get install python-glpk)
+python-dev (sudo apt-get/yum/dnf install python-dev)
+islpy (via Python PIP)
+python-glpk (sudo apt-get/yum/dnf install python-glpk)
 
-The examples folder contains conflict set specifications for various
-examples. Each of these files can be provided as an input to the prototype
-through the command line options
+If you are unable to build/install Python wrappers for glpk via Python's PIP 
+due to a more recent version of glpk on your system, use the pyglpk 
+available here: https://github.com/bradfordboyle/pyglpk
 
 
 BUILDING SMO
@@ -73,6 +73,13 @@ $ make test
 
 * --with-isl-prefix=<location> to compile and link with an already installed 
 isl. By default, the version of isl bundled with Pluto will be used.
+
+
+EXAMPLES
+
+The examples/ directory contains conflict set specifications for various
+examples. Each of these files can be provided as an input to the prototype
+through the command line options
 
 
 CONTACT
