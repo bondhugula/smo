@@ -30,3 +30,23 @@
 
 # Debug files
 *.dSYM/
+
+# build files
+Makefile
+Makefile.in
+aclocal.m4
+libtool
+ltmain.sh
+missing
+install-sh
+config.h
+config.h.in
+config.guess
+config.status
+config.sub
+config.log
+configure
+src/version.h
+getversion.h
+depcomp
+compile
