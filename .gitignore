@@ -47,7 +47,7 @@ config.sub
 config.log
 configure
 src/version.h
-getversion.h
+getversion.sh
 depcomp
 compile
 stamp-h1
