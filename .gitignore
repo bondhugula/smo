@@ -50,3 +50,5 @@ src/version.h
 getversion.h
 depcomp
 compile
+stamp-h1
+autom4te.cache/
