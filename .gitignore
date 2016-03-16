@@ -52,3 +52,6 @@ depcomp
 compile
 stamp-h1
 autom4te.cache/
+.deps/
+.libs/
+src/smo
